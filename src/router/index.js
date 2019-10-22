@@ -70,6 +70,7 @@ let router = new Router({
         {path: '/gCatalogList', component: resolve => require(['../components/page/goods/catalog/gCatalogList.vue'], resolve), meta: { title: '目录管理' }},
         {path: '/gCatalogManager', component: resolve => require(['../components/page/goods/catalog/gCatalogManager.vue'], resolve), meta: { title: '目录操作' }},
 
+        {path: '/aArticle', component: resolve => require(['../components/page/article/article.vue'], resolve), meta: { title: '文章管理' }},
       ]
     },
     {
