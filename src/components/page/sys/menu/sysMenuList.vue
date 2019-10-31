@@ -90,13 +90,12 @@
         <el-table :data="tableData" ref="multipleTable" style="width: 100%" row-key="menuId" border
             lazy :load="load" :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
             <el-table-column fixed type="selection" width="40"></el-table-column>
-            <el-table-column prop="name" label="菜单名称"></el-table-column>
-            <el-table-column prop="menuId" label="" v-show="false"></el-table-column>
-            <el-table-column prop="parentId" label="父菜单ID"></el-table-column>
-            <el-table-column prop="url" label="菜单url"></el-table-column>
-            <el-table-column prop="type" label="类型"></el-table-column>
-            <el-table-column prop="orderNum" label="排序"></el-table-column>
-            <el-table-column prop="status" label="状态"></el-table-column>
+            <el-table-column prop="name" label="菜单名称" width="120" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="parentId" label="父菜单ID" width="100"></el-table-column>
+            <el-table-column prop="url" label="菜单url" width="100"></el-table-column>
+            <el-table-column prop="type" label="类型" width="100"></el-table-column>
+            <el-table-column prop="orderNum" label="排序" width="100"></el-table-column>
+            <el-table-column prop="status" label="状态" width="100"></el-table-column>
             <el-table-column fixed="right" label="操作" width="160">
               <template slot-scope="scope">
                 <el-button @click="update(scope.row)" type="warning" size="mini">编辑</el-button>

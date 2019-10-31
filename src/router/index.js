@@ -28,16 +28,6 @@ let router = new Router({
           meta: { title: '系统首页' }
         },
         {
-          path: '/itemList',
-          component: resolve => require(['../components/page/ticket/itemList.vue'], resolve),
-          meta: { title: 'item管理' }
-        },
-        {
-          path: '/itemManager',
-          component: resolve => require(['../components/page/ticket/itemManager.vue'], resolve),
-          meta: { title: 'itemManager' }
-        },
-        {
           path: '/sysRoleList',
           component: resolve => require(['../components/page/sys/role/sysRoleList.vue'], resolve),
           meta: { title: '角色管理' }
@@ -70,7 +60,9 @@ let router = new Router({
         {path: '/gCatalogList', component: resolve => require(['../components/page/goods/catalog/gCatalogList.vue'], resolve), meta: { title: '目录管理' }},
         {path: '/gCatalogManager', component: resolve => require(['../components/page/goods/catalog/gCatalogManager.vue'], resolve), meta: { title: '目录操作' }},
 
-        {path: '/aArticle', component: resolve => require(['../components/page/article/article.vue'], resolve), meta: { title: '文章管理' }}
+        {path: '/aArticle', component: resolve => require(['../components/page/contents/article/article.vue'], resolve), meta: { title: '文章编辑' }},
+        {path: '/cArticleList', component: resolve => require(['../components/page/contents/article/cArticleList.vue'], resolve), meta: { title: '文章列表' }},
+        {path: '/cArticleManager', component: resolve => require(['../components/page/contents/article/cArticleManager.vue'], resolve), meta: { title: '文章管理' }},
       ]
     },
     {

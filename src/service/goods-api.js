@@ -43,11 +43,11 @@ const goodsApi = {
   save (params) {
     return axios.post(`${baseUrl}/gGoods/add`, params)
   },
-  // 详情
+  // 提交
   submit (params) {
     return axios.post(`${baseUrl}/gGoods/saveIncludeImage`, params)
   },
-  // 详情
+  // 更新
   update (params) {
     return axios.post(`${baseUrl}/gGoods/update`, params)
   },

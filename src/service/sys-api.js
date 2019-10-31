@@ -63,17 +63,25 @@ const menuApi = {
   deleteByIds (params) {
     return axios.post(`${baseUrl}/sysMenu/deleteByIds`, params)
   },
-  // 详情
+  // 保存
   save (params) {
     return axios.post(`${baseUrl}/sysMenu/add`, params)
   },
-  // 详情
+  // 更新
   update (params) {
     return axios.post(`${baseUrl}/sysMenu/update`, params)
   },
   // 详情
   detail (params) {
     return axios.post(`${baseUrl}/sysMenu/detail`, params)
+  },
+  // 获取上级目录树g_catalog
+  getMenuTree (params) {
+    return axios.post(`${baseUrl}/sysMenu/getMenuTree`, params)
+  },
+  //根据条件返回
+  getByCondition(params){
+    return axios.post(`${baseUrl}/sysMenu/getByCondition`, params)
   }
 }
 /**
@@ -130,7 +138,7 @@ const dictApi = {
 /**
  * 参数的api
  */
-const configApi = {
+const configApi = { 
   // 获取roleList
   list (params) {
     return axios.post(`${baseUrl}/sysConfig/getByExample`, params)

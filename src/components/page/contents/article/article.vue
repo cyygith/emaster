@@ -1,8 +1,33 @@
 <template>
     <div class="tinymce">
-        <div class="eidt-container">
-            <editor class="editor" ref="ue1" :value="content1"  :setting="editorSetting" @input="contentUe"></editor>
-        </div>
+        <el-form ref="article" :model="article">
+            <div class="eidt-container">
+                <el-row :gutter="24">
+                    <el-col>
+                        <el-form-item prop="title">
+                            <el-input placeholder="请输入标题" v-model="article.title" size="small"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="24">
+                    <el-col>
+                        <el-form-item prop="subTitle">
+                            <el-input placeholder="请输入副标题" v-model="article.subTitle" size="small"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="24">
+                    <el-col>
+                        <editor class="editor" ref="ue1" :value="content1"  :setting="editorSetting" @input="contentUe"></editor>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="24">
+                    <el-col>
+                        <editor1 class="editor" ref="ue1" :value="content1"  :setting="editorSetting" @input="contentUe"></editor1>
+                    </el-col>
+                </el-row>
+            </div>
+        </el-form>
     </div>
 </template>
 <script>
@@ -14,7 +39,12 @@ export default {
             editorSetting:{
                 language:"",
             },
-            content1:'abc'
+            article:{
+                title:'',
+                subTitle:'',
+                content:''
+            },
+            content1:''
         }
     },
     mounted(){
@@ -68,5 +98,6 @@ export default {
 @import 'src/components/page/style/normal'; 
 .eidt-container{
     padding: 1rem;
+    background-color: white;
 }
 </style>

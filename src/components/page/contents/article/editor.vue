@@ -6,6 +6,7 @@
     import 'tinymce/themes/modern/theme';
     import 'tinymce/plugins/paste';
     import 'tinymce/plugins/link';
+    import 'tinymce/plugins/image';
     const INIT = 0;
     const CHANGED = 2;
     var EDITOR = null;
@@ -15,7 +16,34 @@
                 type: String,
                 required: true
             },
-            setting: {}
+            //setting: {},
+            // 文本编辑器工具栏
+            toolbar: {
+                type: Array,
+                default () {
+                    return [
+                        'newdocument | undo redo | searchreplace print preview code cut copy paste | alignleft aligncenter alignright alignjustify numlist bullist indent outdent subscript superscript removeformat | fullscreen',
+                        'h1 p charmap | fontselect fontsizeselect styleselect | forecolor backcolor bold italic underline strikethrough blockquote | image media table tabledelete emoticons anchor link unlink | formats insertdatetime insertfile help'
+                    ];
+                }
+            },
+            // 菜单栏
+            menubar: {
+                type: String,
+                default: ''
+            },
+            // 插件栏，方便我们去调用一个内置的功能，如打印等
+            plugins: {
+                type: Array,
+                default () {
+                    return ['advlist autolink lists link image charmap print preview anchor textcolor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table contextmenu paste code help'];
+                }
+            },
+            //高度
+            height: {
+                type: Number,
+                default: 300
+            },
         },
         watch: {
             value: function (val) {              
@@ -38,8 +66,9 @@
             const setting =
                 {
                     selector:'#'+_this.id,
-                    language:"zh_CN",
-                    language_url: '../../../static/tinymce/zh_CN.js',
+                    height: this.height,
+                    //language:"zh_CN",
+                    //language_url: '../../../static/tinymce/zh_CN.js',
                     skin_url: '../../../static/tinymce/skins/lightgray',
                     init_instance_callback:function(editor) {
                         EDITOR = editor;
@@ -49,7 +78,9 @@
                             _this.$emit('input', content);
                         });
                     },
-                    plugins:[]
+                    branding: false, // 禁用tinymce插件的商标
+                    toolbar: this.toolbar,
+                    plugins: `link image`
                 };
             Object.assign(setting,_this.setting)
             tinymce.init(setting);

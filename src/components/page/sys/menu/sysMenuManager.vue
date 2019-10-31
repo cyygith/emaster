@@ -16,13 +16,29 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="父菜单名称" prop="parentName">
               <el-input v-model="form.parentName" size="small" :disabled="true"></el-input>
               <el-input v-model="form.parentId" size="small" v-show="false" :disabled="isDetail"></el-input>
             </el-form-item>
+          </el-col> -->
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-popover  placement="right" width="200" trigger="click">
+                <el-tree
+                    :props="defaultProps"
+                    :load="loadNode"
+                    ref="treeForm"
+                    node-key="id"
+                    @node-click="handleNodeClick"
+                    lazy>
+                </el-tree>
+                <el-form-item slot="reference" label="父菜单名称" prop="parentName">
+                    <el-input v-model="form.parentName" size="small" :disabled="isDetail"></el-input>
+                </el-form-item>
+            </el-popover> 
           </el-col>
-
         </el-row>
 
         <el-row :gutter="24">
@@ -56,14 +72,8 @@
         <el-row :gutter="24">
           <el-col :span="12">
             <el-form-item label="状态" prop="status">
-              <el-select v-model="form.status" placeholder="请选择" style="width:100%" size="small" :disabled="isDetail">
-                <el-option
-                  v-for="it in statusArr"
-                  :key="it.value"
-                  :label="it.label"
-                  :value="it.value"
-                ></el-option>
-              </el-select>
+              <el-switch  :disabled="isDetail" v-model="form.status" active-color="#13ce66" inactive-color="grey" active-value="1" inactive-value="0">
+              </el-switch>
             </el-form-item>
           </el-col>
         </el-row>
@@ -101,13 +111,16 @@ export default {
         type: 1,
         icon: "",
         orderNum: "",
-        status: ""
+        status: "1"
       },
       statusArr:[{label:'启用',value:'1'},{label:'禁用',value:'0'}],
       typeArr:[{label: '目录',value : 0},{label: '菜单',value:1},{label:'按钮',value:2}],
       type: "detail", //处理类型，新增add、修改update、查看详情detail
       isDetail: false,
-      
+      defaultProps: {
+          label: 'name',
+          isLeaf: 'isLeaf'
+      },
     };
   },
   props: {
@@ -134,6 +147,36 @@ export default {
     close() {
       this.$emit("closechild");
     },
+    //加载父节点数据
+    loadNode(node, resolve) {
+        let param = new URLSearchParams();
+        if(node.level === 0){
+            param.append("parentId", 0);
+            // resolve({'icon': "el-icon-menu",
+            //   'id': "0",
+            //   'isLeaf': "FALSE",
+            //   'name': "顶级菜单",
+            //   'pid': "000",
+            //   'url': "top"});
+        }else{
+            param.append("parentId", node.data.id);
+        }
+        menuApi.getMenuTree(param).then((res)=>{
+          console.log("tree value:");
+          console.dir(res);
+            if(res.code == 0){
+                resolve(res.data);
+            }
+        });
+    },
+    //选择父节点
+    handleNodeClick(data) {
+        this.checkedId = data.id;
+        this.form.parentId = data.id;
+        console.log("data...");
+        console.dir(data);
+        this.form.parentName = data.name;
+    },
     //设置父ID的相关参数
     setParent(){
       let selObj = this.checkrow.selArr;
@@ -155,13 +198,16 @@ export default {
       }
 
       if (this.type == "update" || this.type == "detail") {
-        let id = selObj.menuId;
+        let menuId = selObj.menuId;
         let param = new URLSearchParams();
-        param.append("id",id);
+        param.append("menuId",menuId);
         // let param = {
         //   menuId: id
         // };
-        menuApi.detail(param).then(res => {
+        menuApi.getByCondition(param).then(res => {
+        // menuApi.detail(param).then(res => {
+          console.log("aaaaa");
+          console.dir(res);
             if (res.code == "0") {
               this.form = res.data;
             }

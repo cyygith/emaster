@@ -89,7 +89,6 @@
             <div class="list-list">
                 <el-table border style="width: 100%" :data="tableData" ref="multipleTable">
                     <el-table-column fixed type="selection" width="40"></el-table-column>
-                    <el-table-column prop="id" label v-show="false"></el-table-column>
                     <el-table-column prop="typeCode" label="字典值"></el-table-column>
                     <el-table-column prop="typeName" label="字典名"></el-table-column>
                     <el-table-column prop="code" label="代码"></el-table-column>
