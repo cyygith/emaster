@@ -24,6 +24,10 @@ const articleApi = {
   // 详情
   detail (params) {
     return axios.post(`${baseUrl}/cArticle/detail`, params)
+  },
+  //上传图片、附件等
+  upload (params) {
+    return axios.post(`${baseUrl}/cArticle/uploadImage`, params)
   }
 }
 

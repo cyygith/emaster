@@ -2,6 +2,8 @@
         <textarea :id="id" :value="value"></textarea>
 </template>
 <script>
+    import {articleApi} from "@/service/contents-api";
+    import { imgBaseUrl } from "@/config/env";
     import tinymce from 'tinymce/tinymce';
     import 'tinymce/themes/modern/theme';
     import 'tinymce/plugins/paste';
@@ -60,7 +62,23 @@
                 id: 'editor-'+new Date().getMilliseconds(),
             }
         },
-        methods: {},
+        methods: {
+            //上传图片处理函数
+            handleImgUpload(blobInfo,success,failure){
+                console.log("upload img....");
+                console.dir(blobInfo);
+                let formdata = new FormData();
+                formdata.append('images', blobInfo.blob())
+                articleApi.upload(formdata).then((res)=>{
+                    console.dir(res);
+                    if(res.code == 0){
+                        success(imgBaseUrl+ '/' +res.data);
+                    }else{
+                        failure('upload failure')
+                    }
+                });
+            }
+        },
         mounted: function () {
             const _this = this;
             const setting =
@@ -80,6 +98,9 @@
                     },
                     branding: false, // 禁用tinymce插件的商标
                     toolbar: this.toolbar,
+                    images_upload_handler:(blobInfo,success,failure)=>{
+                        this.handleImgUpload(blobInfo,success,failure)
+                    },
                     plugins: `link image`
                 };
             Object.assign(setting,_this.setting)

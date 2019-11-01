@@ -21,11 +21,6 @@
                         <editor class="editor" ref="ue1" :value="content1"  :setting="editorSetting" @input="contentUe"></editor>
                     </el-col>
                 </el-row>
-                <el-row :gutter="24">
-                    <el-col>
-                        <editor1 class="editor" ref="ue1" :value="content1"  :setting="editorSetting" @input="contentUe"></editor1>
-                    </el-col>
-                </el-row>
             </div>
         </el-form>
     </div>
