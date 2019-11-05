@@ -319,6 +319,8 @@ export default {
                     // })
                     this.imageList = this.$refs.uploadImage.fileList;
                     this.imageList.forEach((item)=>{
+                        console.log(item.raw);
+                        console.dir(item);
                         wfForm.append('images', item.raw)
                     });
 

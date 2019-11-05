@@ -13,11 +13,15 @@ const articleApi = {
   deleteByIds (params) {
     return axios.post(`${baseUrl}/cArticle/deleteByIds`, params)
   },
-  // 详情
+  // 保存
   save (params) {
     return axios.post(`${baseUrl}/cArticle/add`, params)
   },
-  // 详情
+  //保存html格式数据
+  saveHtml (params) {
+    return axios.post(`${baseUrl}/cArticle/addHtml`,params)
+  },
+  // 更新
   update (params) {
     return axios.post(`${baseUrl}/cArticle/update`, params)
   },

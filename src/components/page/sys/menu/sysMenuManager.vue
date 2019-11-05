@@ -162,8 +162,6 @@ export default {
             param.append("parentId", node.data.id);
         }
         menuApi.getMenuTree(param).then((res)=>{
-          console.log("tree value:");
-          console.dir(res);
             if(res.code == 0){
                 resolve(res.data);
             }
@@ -173,8 +171,6 @@ export default {
     handleNodeClick(data) {
         this.checkedId = data.id;
         this.form.parentId = data.id;
-        console.log("data...");
-        console.dir(data);
         this.form.parentName = data.name;
     },
     //设置父ID的相关参数
@@ -206,8 +202,6 @@ export default {
         // };
         menuApi.getByCondition(param).then(res => {
         // menuApi.detail(param).then(res => {
-          console.log("aaaaa");
-          console.dir(res);
             if (res.code == "0") {
               this.form = res.data;
             }

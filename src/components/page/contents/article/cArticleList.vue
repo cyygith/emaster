@@ -61,17 +61,15 @@
             <div class="list-list">
                 <el-table border style="width: 100%" :data="tableData" ref="multipleTable">
                         <el-table-column fixed type="selection" width="40"></el-table-column>
-                        <el-table-column prop="id" label="id" v-show="false"></el-table-column>
                         <el-table-column prop="title" label="标题"></el-table-column>
-                        <el-table-column prop="subTitle" label="副标题"></el-table-column>
                         <el-table-column prop="author" label="作者"></el-table-column>
                         <el-table-column prop="readCount" label="查看次数"></el-table-column>
                         <el-table-column prop="createTime" label="创建时间"></el-table-column>
-                        <el-table-column prop="updateTime" label="更新时间"></el-table-column>
-                        <el-table-column fixed="right" label="操作" width="160">
+                        <el-table-column fixed="right" label="操作" width="220">
 				            <template slot-scope="scope">
 				              <el-button @click="update(scope.row)" type="warning" size="mini">编辑</el-button>
 				              <el-button @click="detail(scope.row)" type="primary" size="mini">查看</el-button>
+                              <el-button @click="preview(scope.row)" type="primary" size="mini">预览</el-button>
 				            </template>
 				        </el-table-column>
                 </el-table>
@@ -100,16 +98,30 @@
                 <c-article :checkrow="checkRow" @closechild="closechild"></c-article>
             </el-dialog>
         </div>
+        <!--预览-->
+        <div class="popdialog-container">
+            <el-dialog 
+                :title="dialogTitle"
+                width="80%"
+                v-if='preVisible'
+                :visible.sync="preVisible"
+                :close-on-click-modal="false"
+                :before-close="handleClose">
+                <c-preview :checkrow="checkRow" @closechild="closechild"></c-preview>
+            </el-dialog>
+        </div>
     </div>
 </template>
 <script>
 import cArticle from "@/components/page/contents/article/cArticleManager"
+import cPreview from "@/components/page/contents/article/preview"
 import {articleApi} from "@/service/contents-api";
 export default {
 	name:'cArticle',
     data(){
         return {
             dialogVisible:false,
+            preVisible:false,
             visible:false,
             form:{
             	title:'',
@@ -133,9 +145,11 @@ export default {
         }
     },
     components:{
-        'c-article' : cArticle
+        'c-article' : cArticle,
+        'c-preview' : cPreview
     },
     mounted(){
+        this.queryList();
     },
     methods:{
     	//改变每页条数
@@ -151,10 +165,12 @@ export default {
         //关闭弹出窗口
         handleClose(done) {
             this.dialogVisible = false;
+            this.preVisible = false;
         },
         //关闭子窗口
         closechild(){
-        	this.dialogVisible = false;
+            this.dialogVisible = false;
+            this.preVisible = false;
         	//this.queryList();
         },
         //重置
@@ -187,10 +203,12 @@ export default {
 	    },
 	    //修改
 	    update(row) {
-	      this.checkRow.selArr = row;
-	      this.checkRow.type='update';
-	      this.dialogVisible = true;
-	      this.dialogTitle = "修改";
+        //   this.$router.push('/aArticle')
+          this.$router.push({name:'aArticle',params:row});
+	    //   this.checkRow.selArr = row;
+	    //   this.checkRow.type='update';
+	    //   this.dialogVisible = true;
+	    //   this.dialogTitle = "修改";
 	    },
 	    //查看详情
 	    detail(row){
@@ -198,7 +216,14 @@ export default {
 	      this.checkRow.type='detail';
 	      this.dialogVisible = true;
 	      this.dialogTitle = "查看详情";
-	    },
+        },
+        //预览
+        preview(row){
+          this.checkRow.selArr = row;
+	      this.checkRow.type='detail';
+	      this.preVisible = true;
+	      this.dialogTitle = "预览";
+        },
 	    //删除
 	    del(){
 	      this.checkRow.type='del';

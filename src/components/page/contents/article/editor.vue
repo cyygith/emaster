@@ -49,7 +49,6 @@
         },
         watch: {
             value: function (val) {              
-                console.log('init ' + val)
                 if (this.status == INIT || tinymce.activeEditor.getContent() != val){
                     tinymce.activeEditor.setContent(val);
                 }
