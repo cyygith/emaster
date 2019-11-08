@@ -103,21 +103,18 @@ span{
     cursor: pointer;
 }
 .tags {
-    position: absolute;
-    top: 10%;
-    left:20%;
     background-color: white;
     height: 2rem;
     padding: 0.2rem;
     .tab-container {
         &:hover{
-            background-color: rgb(169, 174, 177);
+            background-color:#9cc5de;
             color: white;
         }
         margin-right: 0.2rem;
         float: left;
         position: relative;
-        border: 1px solid rgb(170, 166, 166);
+        border: 1px solid #9cc5de;
         padding-right: 0.8rem;
         .tags-content {
             padding: 0.3rem 0.8rem 0.3rem 0.3rem;
@@ -133,7 +130,7 @@ span{
             padding: 0.1rem 0.3rem;
             &:hover{
                 color: black;
-                background-color: white;
+                background-color: red;
                 border-radius: 50%;
             }
         }
@@ -152,10 +149,13 @@ span{
     }
 }
 .isTagActive{
-    background-color: rgb(169, 174, 177);
+    background-color: #9cc5de;
     color: white;
 }
 a:link,a:active,a:visited,a:hover{
+    text-decoration: none;
+}
+.router-link-active{
     text-decoration: none;
 }
 </style>

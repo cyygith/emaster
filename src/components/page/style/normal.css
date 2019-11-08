@@ -1,6 +1,9 @@
 #itemlist-panel {
   background-color: rgb(202, 199, 199);
 }
+.itemlist-panel {
+  background-color: rgb(202, 199, 199);
+}
 .black-panel {
   height: 0.5rem;
 }

@@ -64,8 +64,6 @@
         methods: {
             //上传图片处理函数
             handleImgUpload(blobInfo,success,failure){
-                console.log("upload img....");
-                console.dir(blobInfo);
                 let formdata = new FormData();
                 formdata.append('images', blobInfo.blob())
                 articleApi.upload(formdata).then((res)=>{

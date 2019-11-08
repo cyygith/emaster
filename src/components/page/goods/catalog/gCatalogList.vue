@@ -16,37 +16,6 @@
                         </el-col>	
                 	</el-row>
                 	<div v-if="queryMore">
-                	<el-row :gutter="24">
-                        <el-col :span="7">
-                            <el-form-item label="类型" prop="cType">
-                                <el-input v-model="form.cType" size="small"></el-input>
-                            </el-form-item>
-                        </el-col>	
-                        <el-col :span="7">
-                            <el-form-item label="父ID" prop="pid">
-                                <el-input v-model="form.pid" size="small"></el-input>
-                            </el-form-item>
-                        </el-col>	
-                        <el-col :span="7">
-                            <el-form-item label="排序" prop="cOrder">
-                                <el-input v-model="form.cOrder" size="small"></el-input>
-                            </el-form-item>
-                        </el-col>	
-                	</el-row>
-                	<el-row :gutter="24">
-                        <el-col :span="7">
-                            <el-form-item label="URL地址" prop="cUrl">
-                                <el-input v-model="form.cUrl" size="small"></el-input>
-                            </el-form-item>
-                        </el-col>	
-                        <el-col :span="7">
-                            <el-form-item label="等级" prop="cLevel">
-                                <el-input v-model="form.cLevel" size="small"></el-input>
-                            </el-form-item>
-                        </el-col>	
-                        
-                	
-                	</el-row>
  					</div>
                     <el-row justify="center">
                         <el-col :span="1" :offset="7">
@@ -78,11 +47,7 @@
                         <el-table-column fixed type="selection" width="40"></el-table-column>
                         <el-table-column prop="cname" label="商品中文名称"></el-table-column>
                         <el-table-column prop="ename" label="商品英文名称"></el-table-column>
-                        <el-table-column prop="cType" label="类型" width="50"></el-table-column>
-                        <el-table-column prop="pid" label="父ID" width="50"></el-table-column>
-                        <el-table-column prop="cOrder" label="排序" width="50"></el-table-column>
                         <el-table-column prop="cUrl" label="URL地址" width="180"></el-table-column>
-                        <el-table-column prop="cLevel" label="等级" width="50"></el-table-column>
                         <el-table-column fixed="right" label="操作" width="160">
 				            <template slot-scope="scope">
 				              <el-button @click="update(scope.row)" type="warning" size="mini">编辑</el-button>

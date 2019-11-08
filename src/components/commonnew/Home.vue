@@ -2,8 +2,9 @@
     <div class="wrapper">
         <v-head></v-head>
         <v-sidebar></v-sidebar> 
-        <v-tags></v-tags>
+        
         <div class="right-panel" :class="{'content-collapse':collapse}">
+            <v-tags></v-tags>
             <div class="right-content">
                 <transition name="move" mode="out-in">
                     <keep-alive :include="tagsList">
@@ -52,10 +53,13 @@
 .right-panel{
     position: absolute;
     left: 20%;
-    top: 16%;
+    top: 10%;
     right: 0;
     height: 90%;
     overflow: auto;
     background-color: rgb(202, 199, 199);
+}
+.content-collapse{
+    left:65px;
 }
 </style>
