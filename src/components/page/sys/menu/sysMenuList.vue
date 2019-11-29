@@ -104,7 +104,7 @@
             </el-table-column> 
         </el-table>
       </div>
-      <!-- <div class="list-page">
+      <div class="list-page">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -113,7 +113,7 @@
           :page-size="page.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="page.totalCount"></el-pagination>
-      </div> -->
+      </div>
     </div>
     <div class="black-panel">&nbsp;</div>
     <div class="popdialog-container">
@@ -198,7 +198,7 @@ export default {
         let param = {
           parentId:tree.menuId
         }
-        menuApi.list(param).then(res => {
+        menuApi.getLevelTree(param).then(res => {
             if (res.code == "0") { 
               resolve(res.data);
             }
@@ -209,10 +209,25 @@ export default {
       let param = {
         parentId:'0'
       }
+      param.size = this.page.pageSize;
+      param.page = this.page.currPage;
+
+      let loading = this.$loading({lock: true,text: "处理中....",background: "rgba(0,0,0,0.5)",target: document.querySelector(".list-panel")});
       menuApi.list(param).then(res => {
           if (res.code == "0") {
-            this.tableData = res.data;
+              this.tableData = res.data.list;
+              this.page.pageSize = res.data.pageSize;
+              this.page.totalCount = res.data.total;
+          } else {
+              this.$message({
+                  showClose: true,
+                  message: "程序出现异常，请联系管理员处理"
+              });
           }
+          loading.close();
+
+
+
       });
     },
     //新增

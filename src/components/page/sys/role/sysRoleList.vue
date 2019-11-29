@@ -5,20 +5,18 @@
       <el-form ref="form" :model="form" label-width="100px">
         <el-row :gutter="24">
           <el-col :span="7">
-            <el-form-item label="角色ID" prop="roleId" style="width:100%">
-              <el-input v-model="form.roleId" size="small"></el-input>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="7">
             <el-form-item label="角色名" prop="roleName">
               <el-input v-model="form.roleName" size="small"></el-input>
             </el-form-item>
           </el-col>
-
           <el-col :span="7">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" size="small"></el-input>
+            <el-form-item label="状态" prop="status">
+              <el-input v-model="form.status" size="small"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="7">
+            <el-form-item label="角色类型" prop="roleType">
+              <el-input v-model="form.roleType" size="small"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -26,29 +24,13 @@
         <div v-if="queryMore">
           <el-row :gutter="24">
             <el-col :span="7">
+              <el-form-item label="角色Code" prop="roleCode">
+                <el-input v-model="form.roleCode" size="small"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="7">
               <el-form-item label="创建时间" prop="createTime">
                 <el-date-picker v-model="form.createTime" type="date" placeholder="选择日期" size="small"></el-date-picker>
-              </el-form-item>
-              
-            </el-col>
-
-            <el-col :span="7">
-              <el-form-item label="状态" prop="status">
-                <el-input v-model="form.status" size="small"></el-input>
-              </el-form-item>
-            </el-col>
-
-            <el-col :span="7">
-              <el-form-item label="角色号" prop="roleType">
-                <el-input v-model="form.roleType" size="small"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row :gutter="24">
-            <el-col :span="7">
-              <el-form-item label="角色名称" prop="roleCode">
-                <el-input v-model="form.roleCode" size="small"></el-input>
               </el-form-item>
             </el-col>
           </el-row>

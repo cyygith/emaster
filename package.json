@@ -15,9 +15,11 @@
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^3.0.1",
+    "echarts": "^4.4.0",
     "element-ui": "^2.8.2",
     "tinymce": "^4.7.11",
     "ts-loader": "^6.2.1",
+    "v-charts": "^1.19.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-schart": "^1.0.0",

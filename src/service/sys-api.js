@@ -59,6 +59,10 @@ const menuApi = {
   list (params) {
     return axios.post(`${baseUrl}/sysMenu/getMenuLevel`, params)
   },
+  //获取menu下拉树数据
+  getLevelTree (params) {
+    return axios.post(`${baseUrl}/sysMenu/getLevelTree`, params)
+  },
   // 删除roleList
   deleteByIds (params) {
     return axios.post(`${baseUrl}/sysMenu/deleteByIds`, params)

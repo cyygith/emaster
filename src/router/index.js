@@ -59,10 +59,13 @@ let router = new Router({
         {path: '/gGoodsManager', component: resolve => require(['../components/page/goods/goods/gGoodsManager.vue'], resolve), meta: { title: '商品操作' }},
         {path: '/gCatalogList', component: resolve => require(['../components/page/goods/catalog/gCatalogList.vue'], resolve), meta: { title: '目录管理' }},
         {path: '/gCatalogManager', component: resolve => require(['../components/page/goods/catalog/gCatalogManager.vue'], resolve), meta: { title: '目录操作' }},
-
+        //文章管理
         {name:'aArticle',path: '/aArticle', component: resolve => require(['../components/page/contents/article/article.vue'], resolve), meta: { title: '文章编辑' }},
         {path: '/cArticleList', component: resolve => require(['../components/page/contents/article/cArticleList.vue'], resolve), meta: { title: '文章列表' }},
         {path: '/cArticleManager', component: resolve => require(['../components/page/contents/article/cArticleManager.vue'], resolve), meta: { title: '文章管理' }},
+        //报表管理
+        {path: '/goodsLineChart', component: resolve => require(['../components/page/contents/chart/goodsLineChart.vue'], resolve), meta: { title: '商品线形图' }},
+
       ]
     },
     {

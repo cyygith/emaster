@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+.settings/
 /dist/
 /src/components/common/
 npm-debug.log*
@@ -7,6 +8,7 @@ yarn-debug.log*
 yarn-error.log*
 /test/unit/coverage/
 /test/e2e/reports/
+/testweb/
 selenium-debug.log
 
 # Editor directories and files

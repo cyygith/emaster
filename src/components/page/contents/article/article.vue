@@ -52,7 +52,8 @@ export default {
                 id:'',
                 title:'',
                 subTitle:'',
-                content:''
+                content:'',
+                author:''
             },
             rules: {//校验表单
             	title:[{required:true,message:'标题不能为空',trigger: 'blur'}],
@@ -107,6 +108,11 @@ export default {
         saveOrUpdate() {  
             this.$refs['article'].validate((valid) =>{
                 if(valid){  
+                    if(this.article.author == ''){
+                        let user = JSON.parse(sessionStorage.getItem("user"));
+                        this.article.author = user.name;
+                    }
+                    
                     let parm = this.article;      
                     let loading = this.$loading({lock: true,text: "保存中....", background: "rgba(0,0,0,0.5)"});
                     

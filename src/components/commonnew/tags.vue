@@ -1,5 +1,12 @@
 <template>
     <div class="tags">
+        <div class="tab-container">
+            <span class="tags-content"  :class="{'isTagActive': isActive('/dash')}">
+                <router-link :to="'/home'">
+                系统首页
+                </router-link>
+            </span>
+        </div>
         <div class="tab-container" v-for="(item,index) in tagsList" :class="{'isTagActive': isActive(item.path)}" :key="index">
             <span class="tags-content">
                 <router-link :to="item.path">
@@ -42,11 +49,10 @@ export default {
         }
     },
     created() {
-        
+        //this.tagsList.push({title: '系统首页', path: '/dash',name: '系统首页'})
     },
     methods: {
         handleTags(command){
-            console.log("command:"+command);
             command === 'other' ? this.closeOther() : this.closeAll();
         },
         isActive(path) {
@@ -66,7 +72,6 @@ export default {
                     path: route.fullPath,
                     name: route.matched[1].components.default.name
                 })
-                console.log("fullPath"+route.fullPath);
             }
             bus.$emit('tags', this.tagsList);
         },
@@ -115,18 +120,14 @@ span{
         float: left;
         position: relative;
         border: 1px solid #9cc5de;
-        padding-right: 0.8rem;
         .tags-content {
-            padding: 0.3rem 0.8rem 0.3rem 0.3rem;
+            padding: 0.3rem 0.3rem 0.3rem 0.3rem;
             float: left;
             color: black;
         }
         .tags-tips {
             font-size: 0.9rem;
-            position: absolute;
-            top: 0;
-            right: 0.1rem;
-            margin-top: -0.1rem;
+            
             padding: 0.1rem 0.3rem;
             &:hover{
                 color: black;
