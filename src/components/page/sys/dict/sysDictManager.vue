@@ -82,12 +82,11 @@
                         v-if="!isDetail"
                     >重置</el-button>
                 </el-col>
-                <el-col :span="2" :offset="2">
+                <el-col :span="2" :offset="!isDetail?2:9">
                     <el-button
                         type="primary"
                         icon="el-icon-circle-close"
                         @click="close"
-                        :offset="!isDetail?2:9"
                     >关闭</el-button>
                 </el-col>
             </el-row>
