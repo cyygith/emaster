@@ -372,11 +372,7 @@ export default {
         
             genApi.generator(param).then((res)=>{
                     if(res.code == "0"){
-                        this.$message({
-                            showClose: true,
-                            message: '生成成功！',
-                            duration:2000
-                        });
+                        this.$alert("生成成功，具体情况如下："+res.data);
                         this.queryList();//关闭后刷新界面
                     }else{
                         this.$message({showClose:true,message:'生成失败，程序出现异常，请联系管理员处理'});

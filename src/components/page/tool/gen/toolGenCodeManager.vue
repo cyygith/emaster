@@ -137,11 +137,13 @@ export default {
             form:{
             	id:'',
             	runTable:'SYS_DICT_TYPE',
+                projectPath:'C:/Users/Administrator/Desktop/cyyGen/',
+            	templateFilePath:'E:/WORK/WORKSPACE_JDK8/SPRINGWorkspace/ellingmaster/src/main/resources/template/backTemplate',
+            	runClass:'com.elling.tool.generator.run.runImpl.BackEndRunImpl',
                 javaPath:'/src/main/java',
                 jdbcSchema:'emaster',
             	resourcesPath:'/src/main/resources',
-            	templateFilePath:'/src/main/resources/template/backTemplate',
-            	baseModel:'tool',
+            	baseModel:'',
             	basePackage:'com.elling.tool',
             	modelPackage:'com.elling.tool.model',
             	mapperPackage:'com.elling.tool.dao.mapper',
@@ -152,9 +154,8 @@ export default {
             	author:'CYY',
             	dateFormat:'yyyy/MM/dd',
             	runCount:'',
-            	runClass:'com.elling.tool.model.ToolGenCode.BackEndRun',
-            	runTime:'',
-                projectPath:''
+            	runTime:''
+                
             },
         	type:'detail',//处理类型，新增add、修改update、查看详情detail
             isDetail:false,
@@ -174,6 +175,7 @@ export default {
             	dateFormat:[{required:true,message:'时间格式化不能为空',trigger: 'blur'}],
                 runClass:[{required:true,message:'执行类不能为空',trigger: 'blur'}],
                 pagePath:[{required:true,message:'page页面路径不能为空',trigger: 'blur'}],
+                projectPath:[{required:true,message:'项目地址不能为空',trigger: 'blur'}]
             }
         }
     },
@@ -193,15 +195,25 @@ export default {
             //return this.form.tPrice - this.form.dPrice;
         }
     },
-    watch:{
-        modelChange(val){
-            //this.form.baseModel = val;
-        }
+    watch:{//监听参数
+        "form.baseModel":function(val,oldVal){
+            this.form.basePackage = "com.elling."+val;
+            this.form.modelPackage = this.form.basePackage + ".model";
+            this.form.mapperPackage = this.form.basePackage + ".dao.mapper";
+            this.form.servicePackage = this.form.basePackage + ".service";
+            this.form.serviceImplPackage = this.form.basePackage + ".service.impl";
+            this.form.controllerPackage = this.form.basePackage + ".controller";
+        },
     },
     mounted(){
  		this.queryById();
     },
     methods:{
+        //同步计算更新其他的
+        changeBase(){
+            let val = this.form.baseModel;
+            this.form.basePackage = this.form.basePackage.replace(oldVal,val);
+        },
         //重置
         resetForm() {
             this.$refs["form"].resetFields();
@@ -214,12 +226,9 @@ export default {
         queryById(){
             this.type= this.checkrow.type;
             let selObj = this.checkrow.selArr;
-            console.log("heere...");
-            console.dir(selObj)
             if(this.type == 'detail'){
                 this.isDetail = true;
             }
-            console.log("是否detail:" + this.isDetail);
             if(this.type=='update'||this.type=='detail'){
                 let id = selObj.id;
                 let param = new URLSearchParams();
