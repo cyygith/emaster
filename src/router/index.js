@@ -65,7 +65,9 @@ let router = new Router({
         {path: '/cArticleManager', component: resolve => require(['../components/page/contents/article/cArticleManager.vue'], resolve), meta: { title: '文章管理' }},
         //报表管理
         {path: '/goodsLineChart', component: resolve => require(['../components/page/contents/chart/goodsLineChart.vue'], resolve), meta: { title: '商品线形图' }},
-
+        //代码生成器
+        {path: '/toolGenCodeList', component: resolve => require(['../components/page/tool/gen/toolGenCodeList.vue'], resolve), meta: { title: '代码生成器' }},
+        {path: '/toolGenCodeManager', component: resolve => require(['../components/page/tool/gen/toolGenCodeManager.vue'], resolve), meta: { title: '代码生成器' }},
       ]
     },
     {
