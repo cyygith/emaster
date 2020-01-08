@@ -93,9 +93,20 @@
             <el-table-column prop="name" label="菜单名称" width="120" show-overflow-tooltip></el-table-column>
             <el-table-column prop="parentId" label="父菜单ID" width="100"></el-table-column>
             <el-table-column prop="url" label="菜单url" width="100"></el-table-column>
-            <el-table-column prop="type" label="类型" width="100"></el-table-column>
+            <el-table-column prop="type" label="类型" width="100">
+              <template slot-scope="scope">
+                <span v-if="scope.row.type==0">目录</span>
+                <span v-if="scope.row.type==1">菜单</span>
+                <span v-if="scope.row.type==2">按钮</span>
+              </template>
+            </el-table-column>
             <el-table-column prop="orderNum" label="排序" width="100"></el-table-column>
-            <el-table-column prop="status" label="状态" width="100"></el-table-column>
+            <el-table-column prop="status" label="状态" width="100">
+              <template slot-scope="scope">
+                <span v-if="scope.row.status=='0'">禁用</span>
+                <span v-if="scope.row.status=='1'">启用</span>
+              </template>
+            </el-table-column>
             <el-table-column fixed="right" label="操作" width="160">
               <template slot-scope="scope">
                 <el-button @click="update(scope.row)" type="warning" size="mini">编辑</el-button>
@@ -199,6 +210,7 @@ export default {
           parentId:tree.menuId
         }
         menuApi.getLevelTree(param).then(res => {
+            console.dir(res);
             if (res.code == "0") { 
               resolve(res.data);
             }

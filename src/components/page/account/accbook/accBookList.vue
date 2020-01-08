@@ -3,47 +3,37 @@
         <div class="black-panel"> &nbsp;</div>
         <div class="condition-panel">
                 <el-form ref="form" :model="form" label-width="120px">
-                	                	<el-row :gutter="24">
-                        <el-col :span="7">
-                            <el-form-item label="账本类型 0-收入 1-支出" prop="type">
-                                <el-input v-model="form.type" size="small"></el-input>
-                            </el-form-item>
-                        </el-col>	
-                        <el-col :span="7">
-                            <el-form-item label="金额" prop="money">
-                                <el-input v-model="form.money" size="small"></el-input>
-                            </el-form-item>
-                        </el-col>	
-                		<el-col :span="7">
-                            <el-form-item label="记账时间" prop="time">
-				                <el-date-picker v-model="form.time" type="date" placeholder="选择日期" size="small"></el-date-picker>
-				            </el-form-item>
-                        </el-col>
-                	</el-row>
-                	<div v-if="queryMore">
                 	<el-row :gutter="24">
+                        <el-col :span="7">
+                            <el-form-item label="账本类型" prop="type">
+                                <el-select v-model="form.type" placeholder="请选择" style="width:100%" size="small">
+                                    <el-option
+                                        v-for="it in typeArr"
+                                        :key="it.value"
+                                        :label="it.label"
+                                        :value="it.value"
+                                    ></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>	
                         <el-col :span="7">
                             <el-form-item label="备注" prop="mark">
                                 <el-input v-model="form.mark" size="small"></el-input>
                             </el-form-item>
                         </el-col>	
-                        <el-col :span="7">
-                            <el-form-item label="类别 001-生活 002-蔬菜等" prop="category">
-                                <el-input v-model="form.category" size="small"></el-input>
-                            </el-form-item>
-                        </el-col>	
                 		<el-col :span="7">
-                            <el-form-item label="创建时间" prop="createTime">
-				                <el-date-picker v-model="form.createTime" type="date" placeholder="选择日期" size="small"></el-date-picker>
+                            <el-form-item label="记账时间" prop="time">
+				                <el-date-picker v-model="form.time" value-format="yyyy-MM-DD" type="date" placeholder="选择日期" size="small"></el-date-picker>
 				            </el-form-item>
                         </el-col>
                 	</el-row>
-                	<el-row :gutter="24">
-                		<el-col :span="7">
-                            <el-form-item label="更新时间" prop="updateTime">
-				                <el-date-picker v-model="form.updateTime" type="date" placeholder="选择日期" size="small"></el-date-picker>
-				            </el-form-item>
-                        </el-col>
+                	<div v-if="queryMore">
+                	<el-row :gutter="24">	
+                        <el-col :span="7">
+                            <el-form-item label="类别" prop="category">
+                                <el-input v-model="form.category" size="small"></el-input>
+                            </el-form-item>
+                        </el-col>	
                 	</el-row>
  					</div>
                     <el-row justify="center">
@@ -116,8 +106,8 @@
     </div>
 </template>
 <script>
-import accBook from "@/components/page/accbook/BOOK/accBookManager"
-import {BOOKApi} from "@/service/sys-api";
+import accBook from "@/components/page/account/accbook/accBookManager"
+import {accountApi} from "@/service/account-api";
 export default {
 	name:'accBook',
     data(){
@@ -133,6 +123,7 @@ export default {
             	createTime:'',
             	updateTime:'',
             },
+            typeArr:[{label:'收入',value:'0'},{label:'支出',value:'1'}],
             page:{
             	pageSize:5,
             	currPage:1,
@@ -181,7 +172,7 @@ export default {
 	        param.page = this.page.currPage;
 	        
 	        let loading = this.$loading({lock:true,text:'处理中....',background:'rgba(0,0,0,0.5)',target: document.querySelector('.list-panel')});
-	        BOOKApi.list(param).then((res)=>{
+	        accountApi.list(param).then((res)=>{
                 if(res.code == "0"){
                   this.tableData = res.data.list;
                   this.page.pageSize = res.data.pageSize;
@@ -227,7 +218,7 @@ export default {
 	        ids:idArr.join(",")
 	      }
 	
-	      BOOKApi.deleteByIds(param).then((res)=>{
+	      accountApi.deleteByIds(param).then((res)=>{
                 if(res.code == "0"){
                   this.$message({
                     showClose: true,

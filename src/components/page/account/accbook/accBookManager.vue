@@ -4,8 +4,15 @@
             <el-form ref="form" :rules="rules" :model="form" label-width="100px">
             	            	<el-row :gutter="24">
                     <el-col :span="12">
-                        <el-form-item label="账本类型 0-收入 1-支出" prop="type">
-                            <el-input v-model="form.type" size="small" :disabled="isDetail"></el-input>
+                        <el-form-item label="账本类型" prop="type">
+                            <el-select v-model="form.type" placeholder="请选择" style="width:100%" size="small" :disabled="isDetail">
+                                <el-option
+                                    v-for="it in typeArr"
+                                    :key="it.value"
+                                    :label="it.label"
+                                    :value="it.value"
+                                ></el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>	
                     <el-col :span="12">
@@ -17,7 +24,7 @@
             	<el-row :gutter="24">
             		<el-col :span="12">
                         <el-form-item label="记账时间" prop="time">
-			                <el-date-picker v-model="form.time" type="date" placeholder="选择日期" size="small" :disabled="isDetail"></el-date-picker>
+			                <el-date-picker v-model="form.time" value-format="yyyy-MM-DD" type="date" placeholder="选择日期" size="small" :disabled="isDetail"></el-date-picker>
 			            </el-form-item>
                     </el-col>
                     <el-col :span="12">
@@ -28,22 +35,17 @@
             	</el-row>
             	<el-row :gutter="24">
                     <el-col :span="12">
-                        <el-form-item label="类别 001-生活 002-蔬菜等" prop="category">
-                            <el-input v-model="form.category" size="small" :disabled="isDetail"></el-input>
+                        <el-form-item label="类别" prop="category">
+                            <el-select v-model="form.category" placeholder="请选择" style="width:100%" size="small" :disabled="isDetail">
+                                <el-option
+                                    v-for="it in categoryArr"
+                                    :key="it.value"
+                                    :label="it.label"
+                                    :value="it.value"
+                                ></el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>	
-            		<el-col :span="12">
-                        <el-form-item label="创建时间" prop="createTime">
-			                <el-date-picker v-model="form.createTime" type="date" placeholder="选择日期" size="small" :disabled="isDetail"></el-date-picker>
-			            </el-form-item>
-                    </el-col>
-            	</el-row>
-            	<el-row :gutter="24">
-            		<el-col :span="12">
-                        <el-form-item label="更新时间" prop="updateTime">
-			                <el-date-picker v-model="form.updateTime" type="date" placeholder="选择日期" size="small" :disabled="isDetail"></el-date-picker>
-			            </el-form-item>
-                    </el-col>
             	</el-row>
             </el-form>
         </div>
@@ -64,7 +66,7 @@
     </div>
 </template>
 <script>
-import {BOOKApi} from "@/service/sys-api";
+import {accountApi} from "@/service/account-api";
 export default {
     data(){
         return {
@@ -78,7 +80,9 @@ export default {
             	createTime:'',
             	updateTime:'',
             },
-        	type:'detail',//处理类型，新增add、修改update、查看详情detail
+            type:'detail',//处理类型，新增add、修改update、查看详情detail
+            typeArr:[{label:'收入',value:'0'},{label:'支出',value:'1'}],
+            categoryArr:[{label:'生活',value:'001'},{label:'出行',value:'002'},{label:'水果',value:'003'}],
             isDetail:false,
             rules: {//校验表单
             	type:[{required:true,message:'账本类型 0-收入 1-支出不能为空',trigger: 'blur'}],
@@ -86,8 +90,6 @@ export default {
             	time:[{required:true,message:'记账时间不能为空',trigger: 'blur'}],
             	mark:[{required:true,message:'备注不能为空',trigger: 'blur'}],
             	category:[{required:true,message:'类别 001-生活 002-蔬菜等不能为空',trigger: 'blur'}],
-            	createTime:[{required:true,message:'创建时间不能为空',trigger: 'blur'}],
-            	updateTime:[{required:true,message:'更新时间不能为空',trigger: 'blur'}],
             }
         }
     },
@@ -129,7 +131,7 @@ export default {
                 //let param = {
                 //    id:id
                 //};
-                BOOKApi.detail(param).then((res)=>{
+                accountApi.detail(param).then((res)=>{
                     if(res.code == "0"){
                         this.form = res.data;
                     }else{
@@ -148,7 +150,7 @@ export default {
 		            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
 		            let url = '';
 		            if(this.type == 'update'){
-		                BOOKApi.update(param).then((res)=>{
+		                accountApi.update(param).then((res)=>{
 			    			if(res.code == "0"){
 			        			this.$alert('更新成功','提示信息',{
 			        				confirmButtonText:'确定',
@@ -162,7 +164,7 @@ export default {
 			        		loading.close();
 			        	});	
 		            }else{
-		                BOOKApi.save(param).then((res)=>{
+		                accountApi.save(param).then((res)=>{
 			    			if(res.code == "0"){
 			        			this.$alert('保存成功','提示信息',{
 			        				confirmButtonText:'确定',
