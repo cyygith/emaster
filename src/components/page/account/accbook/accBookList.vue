@@ -64,13 +64,12 @@
             <div class="list-list">
                 <el-table border style="width: 100%" :data="tableData" ref="multipleTable">
                         <el-table-column fixed type="selection" width="40"></el-table-column>
-                        <el-table-column prop="type" label="账本类型 0-收入 1-支出"></el-table-column>
+                        <el-table-column prop="type" label="账本类型"></el-table-column>
                         <el-table-column prop="money" label="金额"></el-table-column>
                         <el-table-column prop="time" label="记账时间"></el-table-column>
                         <el-table-column prop="mark" label="备注"></el-table-column>
-                        <el-table-column prop="category" label="类别 001-生活 002-蔬菜等"></el-table-column>
+                        <el-table-column prop="category" label="类别"></el-table-column>
                         <el-table-column prop="createTime" label="创建时间"></el-table-column>
-                        <el-table-column prop="updateTime" label="更新时间"></el-table-column>
                         <el-table-column fixed="right" label="操作" width="160">
 				            <template slot-scope="scope">
 				              <el-button @click="update(scope.row)" type="warning" size="mini">编辑</el-button>

@@ -78,18 +78,19 @@ export default {
             	mark:'',
             	category:'',
             	createTime:'',
-            	updateTime:'',
+                updateTime:'',
+                userId:''
             },
             type:'detail',//处理类型，新增add、修改update、查看详情detail
             typeArr:[{label:'收入',value:'0'},{label:'支出',value:'1'}],
             categoryArr:[{label:'生活',value:'001'},{label:'出行',value:'002'},{label:'水果',value:'003'}],
             isDetail:false,
             rules: {//校验表单
-            	type:[{required:true,message:'账本类型 0-收入 1-支出不能为空',trigger: 'blur'}],
+            	type:[{required:true,message:'账本类型不能为空',trigger: 'blur'}],
             	money:[{required:true,message:'金额不能为空',trigger: 'blur'}],
             	time:[{required:true,message:'记账时间不能为空',trigger: 'blur'}],
             	mark:[{required:true,message:'备注不能为空',trigger: 'blur'}],
-            	category:[{required:true,message:'类别 001-生活 002-蔬菜等不能为空',trigger: 'blur'}],
+            	category:[{required:true,message:'类别不能为空',trigger: 'blur'}],
             }
         }
     },
@@ -146,6 +147,8 @@ export default {
         saveOrUpdate() {
         this.$refs['form'].validate((valid) =>{
                 if(valid){
+                    let user = JSON.parse(sessionStorage.getItem('user'));
+                    this.form.userId = user.userId;
 		        	let param = this.form;
 		            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
 		            let url = '';
