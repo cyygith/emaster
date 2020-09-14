@@ -245,8 +245,6 @@ export default {
         handleNodeClick(data) {
             this.checkedId = data.id;
             this.form.pid = data.id;
-            console.log("data...");
-            console.dir(data);
             this.form.pname = data.name;
 
             // if(checked === true) {
@@ -318,8 +316,6 @@ export default {
                     // })
                     this.imageList = this.$refs.uploadImage.fileList;
                     this.imageList.forEach((item)=>{
-                        console.log(item.raw);
-                        console.dir(item);
                         wfForm.append('images', item.raw)
                     });
 

@@ -67,7 +67,6 @@
                 let formdata = new FormData();
                 formdata.append('images', blobInfo.blob())
                 articleApi.upload(formdata).then((res)=>{
-                    console.dir(res);
                     if(res.code == 0){
                         success(imgBaseUrl+ '/' +res.data);
                     }else{
@@ -87,7 +86,6 @@
                     skin_url: '../../../static/tinymce/skins/lightgray',
                     init_instance_callback:function(editor) {
                         EDITOR = editor;
-                        console.log("Editor: " + editor.id + " is now initialized.");
                         editor.on('input change undo redo', () => {
                             var content = editor.getContent()
                             _this.$emit('input', content);

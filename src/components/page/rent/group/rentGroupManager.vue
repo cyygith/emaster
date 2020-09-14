@@ -2,29 +2,52 @@
     <div id="itemManager-container">
         <div class="form-container">
             <el-form ref="form" :rules="rules" :model="form" label-width="100px">
-            	<el-row :gutter="24">
-                    <el-col>
-                        <el-form-item label="标题" prop="title">
-                            <el-input v-model="form.title" size="small" placeholder="请输入标题" :disabled="isDetail"></el-input>
+            	            	<el-row :gutter="24">
+                    <el-col :span="12">
+                        <el-form-item label="房组编号" prop="groupCode">
+                            <el-input v-model="form.groupCode" size="small" :disabled="isDetail"></el-input>
+                        </el-form-item>
+                    </el-col>	
+                    <el-col :span="12">
+                        <el-form-item label="房组名称" prop="groupName">
+                            <el-input v-model="form.groupName" size="small" :disabled="isDetail"></el-input>
                         </el-form-item>
                     </el-col>	
             	</el-row>
             	<el-row :gutter="24">
-                    <el-col>
-                        <el-form-item label="副标题" prop="subTitle">
-                            <el-input v-model="form.subTitle" size="small" placeholder="请输入副标题" :disabled="isDetail"></el-input>
+                    <el-col :span="12">
+                        <el-form-item label="房组地址" prop="groupAddress">
+                            <el-input v-model="form.groupAddress" size="small" :disabled="isDetail"></el-input>
+                        </el-form-item>
+                    </el-col>	
+                    <el-col :span="12">
+                    	<el-form-item label="状态" prop="status">
+                            <el-select v-model="form.status" placeholder="请选择" style="width:100%" size="small" :disabled="isDetail">
+                                <el-option
+                                    v-for="it in statusArr"
+                                    :key="it.value"
+                                    :label="it.label"
+                                    :value="it.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+            	</el-row>
+            	<el-row :gutter="24">
+                    <el-col :span="12">
+                        <el-form-item label="排序号" prop="orderNum">
+                            <el-input v-model="form.orderNum" size="small" :disabled="isDetail"></el-input>
+                        </el-form-item>
+                    </el-col>	
+                    <el-col :span="12">
+                        <el-form-item label="备注" prop="remark">
+                            <el-input v-model="form.remark" size="small" :disabled="isDetail"></el-input>
                         </el-form-item>
                     </el-col>	
             	</el-row>
-                <el-row>
-                    <el-col>
-                        <el-form-item label="文章内容" prop="content">
-                            <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="form.content" size="small" :disabled="isDetail"></el-input>
-                        </el-form-item>
-                    </el-col>	
-                </el-row>
             </el-form>
         </div>
+        
         <div class="button-container">
             <el-row justify="center">
                 <el-col :span="2" :offset="5">
@@ -34,34 +57,40 @@
                     <el-button type="primary" icon="el-icon-delete-solid" @click="resetForm" v-if="!isDetail">重置</el-button>
                 </el-col>
                 <el-col :span="2" :offset="!isDetail?2:9">
-                    <el-button type="primary" icon="el-icon-circle-close" @click="close" >关闭</el-button>
+                    <el-button type="primary" icon="el-icon-circle-close" @click="close">关闭</el-button>
                 </el-col>
             </el-row>
         </div>
     </div>
 </template>
 <script>
-import {articleApi} from "@/service/contents-api";
+import {groupApi} from "@/service/rent-api";
 export default {
     data(){
         return {
             form:{
             	id:'',
-            	title:'',
-            	subTitle:'',
-            	content:'',
-            	author:'',
-            	readCount:'',
-            	zanCount:'',
+            	groupCode:'',
+            	groupName:'',
+            	groupAddress:'',
+            	status:'',
+            	orderNum:'',
+            	remark:'',
             	createTime:'',
             	updateTime:'',
             },
+            statusArr:[{label:'启用',value:'1'},{label:'禁用',value:'0'}],
         	type:'detail',//处理类型，新增add、修改update、查看详情detail
             isDetail:false,
             rules: {//校验表单
-            	title:[{required:true,message:'标题不能为空',trigger: 'blur'}],
-            	subTitle:[{required:true,message:'副标题不能为空',trigger: 'blur'}],
-            	content:[{required:true,message:'文章内容不能为空',trigger: 'blur'}],
+            	groupCode:[{required:true,message:'房组编号不能为空',trigger: 'blur'}],
+            	groupName:[{required:true,message:'房组名称不能为空',trigger: 'blur'}],
+            	groupAddress:[{required:true,message:'房组地址不能为空',trigger: 'blur'}],
+            	status:[{required:true,message:'状态不能为空',trigger: 'blur'}],
+            	orderNum:[{required:true,message:'排序号不能为空',trigger: 'blur'}],
+            	remark:[{required:true,message:'备注不能为空',trigger: 'blur'}],
+            	createTime:[{required:true,message:'创建时间不能为空',trigger: 'blur'}],
+            	updateTime:[{required:true,message:'更新时间不能为空',trigger: 'blur'}],
             }
         }
     },
@@ -73,6 +102,7 @@ export default {
     	}
     },
     components:{
+    
     },
     mounted(){
  		this.queryById();
@@ -93,14 +123,16 @@ export default {
             if(this.type == 'detail'){
                 this.isDetail = true;
             }
+
             if(this.type=='update'||this.type=='detail'){
                 let id = selObj.id;
                 let param = new URLSearchParams();
                 param.append("id",id);
+                
                 //let param = {
-                //    id:id
+                //    ID:id
                 //};
-                articleApi.detail(param).then((res)=>{
+                groupApi.detail(param).then((res)=>{
                     if(res.code == "0"){
                         this.form = res.data;
                     }else{
@@ -108,7 +140,9 @@ export default {
                     }
                 });
             }
+            
         },
+
         //新增或者更新
         saveOrUpdate() {
         this.$refs['form'].validate((valid) =>{
@@ -117,7 +151,7 @@ export default {
 		            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
 		            let url = '';
 		            if(this.type == 'update'){
-		                articleApi.update(param).then((res)=>{
+		                groupApi.update(param).then((res)=>{
 			    			if(res.code == "0"){
 			        			this.$alert('更新成功','提示信息',{
 			        				confirmButtonText:'确定',
@@ -131,9 +165,7 @@ export default {
 			        		loading.close();
 			        	});	
 		            }else{
-                        let user = sessionStorage.getItem("user");
-                        this.form.author = user.userId;
-		                articleApi.save(param).then((res)=>{
+		                groupApi.save(param).then((res)=>{
 			    			if(res.code == "0"){
 			        			this.$alert('保存成功','提示信息',{
 			        				confirmButtonText:'确定',

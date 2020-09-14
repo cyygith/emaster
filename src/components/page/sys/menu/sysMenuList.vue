@@ -210,7 +210,6 @@ export default {
           parentId:tree.menuId
         }
         menuApi.getLevelTree(param).then(res => {
-            console.dir(res);
             if (res.code == "0") { 
               resolve(res.data);
             }

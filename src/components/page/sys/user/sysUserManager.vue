@@ -268,7 +268,6 @@ export default {
                         return {id:item.roleId,name:item.roleName}
                     });
 
-                    console.dir(this.roleTree);
                 }
             });
         },

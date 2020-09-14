@@ -118,9 +118,6 @@ export default {
                     
                     if(this.type == "update"){
                         articleApi.update(parm).then(res => {
-                            console.log('abc');
-                            console.dir(res);
-                            console.dir(parm)
                             if (res.code == "0") {
                                 this.$alert("更新成功", "提示信息", {
                                 confirmButtonText: "确定",

@@ -150,7 +150,6 @@ export default {
                     if(res.code == "0"){
                         this.form = res.data;
                         this.$refs.tree.setCheckedNodes(res.data1);  //设置所选择的菜单
-                        console.dir(res.data1);
                     }else{
                         this.$alert('获取信息失败，请联系管理员处理','提示信息');
                     }

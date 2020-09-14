@@ -53,7 +53,6 @@ export default {
         queryById() {
             this.type = this.checkrow.type;
             let selObj = this.checkrow.selArr;
-            console.dir(selObj);
             if (this.type == "detail") {
                 this.isDetail = true;
             }
@@ -64,7 +63,6 @@ export default {
                 param.append("id",id);
                 
                 articleApi.detail(param).then(res => {
-                    console.dir(res);
                     if (res.code == "0") {
                         this.article = res.data;
                     }

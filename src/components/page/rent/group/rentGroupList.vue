@@ -2,25 +2,61 @@
     <div id="itemlist-panel" class="itemlist-panel">
         <div class="black-panel"> &nbsp;</div>
         <div class="condition-panel">
-                <el-form ref="form" :model="form" label-width="120px">               	
+                <el-form ref="form" :model="form" label-width="120px">
+                	                	<el-row :gutter="24">
+                        <el-col :span="7">
+                            <el-form-item label="房组编号" prop="groupCode">
+                                <el-input v-model="form.groupCode" size="small"></el-input>
+                            </el-form-item>
+                        </el-col>	
+                        <el-col :span="7">
+                            <el-form-item label="房组名称" prop="groupName">
+                                <el-input v-model="form.groupName" size="small"></el-input>
+                            </el-form-item>
+                        </el-col>	
+                        <el-col :span="7">
+                            <el-form-item label="房组地址" prop="groupAddress">
+                                <el-input v-model="form.groupAddress" size="small"></el-input>
+                            </el-form-item>
+                        </el-col>	
+                	</el-row>
+                	<div v-if="queryMore">
                 	<el-row :gutter="24">
                         <el-col :span="7">
-                            <el-form-item label="商品中文名称" prop="cname">
-                                <el-input v-model="form.cname" size="small"></el-input>
+                        	<el-form-item label="状态" prop="status">
+	                            <el-select v-model="form.status" placeholder="请选择" style="width:100%" size="small">
+	                                <el-option
+	                                    v-for="it in statusArr"
+	                                    :key="it.value"
+	                                    :label="it.label"
+	                                    :value="it.value">
+	                                </el-option>
+	                            </el-select>
+	                        </el-form-item>
+                        </el-col>
+                        <el-col :span="7">
+                            <el-form-item label="排序号" prop="orderNum">
+                                <el-input v-model="form.orderNum" size="small"></el-input>
                             </el-form-item>
                         </el-col>	
                         <el-col :span="7">
-                            <el-form-item label="商品英文名称" prop="ename">
-                                <el-input v-model="form.ename" size="small"></el-input>
+                            <el-form-item label="备注" prop="remark">
+                                <el-input v-model="form.remark" size="small"></el-input>
                             </el-form-item>
                         </el-col>	
+                	</el-row>
+                	<el-row :gutter="24">
                 		<el-col :span="7">
                             <el-form-item label="创建时间" prop="createTime">
 				                <el-date-picker v-model="form.createTime" type="date" placeholder="选择日期" size="small"></el-date-picker>
 				            </el-form-item>
                         </el-col>
+                		<el-col :span="7">
+                            <el-form-item label="更新时间" prop="updateTime">
+				                <el-date-picker v-model="form.updateTime" type="date" placeholder="选择日期" size="small"></el-date-picker>
+				            </el-form-item>
+                        </el-col>
                 	</el-row>
-                	<div v-if="queryMore">
  					</div>
                     <el-row justify="center">
                         <el-col :span="1" :offset="7">
@@ -49,19 +85,15 @@
             </div>
             <div class="list-list">
                 <el-table border style="width: 100%" :data="tableData" ref="multipleTable">
-                        <el-table-column fixed type="selection" width="40" height="20px"></el-table-column>
-                        <el-table-column prop="cname" label="商品中文名称" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="cUrl" label="优惠券地址" width="160" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="tPrice" label="原价" width="50"></el-table-column>
-                        <el-table-column prop="dPrice" label="折扣价" width="50"></el-table-column>
-                        <el-table-column prop="sellCount" label="销售数量" width="80"></el-table-column>
-                        <el-table-column prop="ticket" label="优惠价" width="60"></el-table-column>
-                        <el-table-column prop="imgUrl" label="优惠券地址" height="20px">
-                            <template slot-scope="scope"> 
-                                <img :src="getPic(scope)" width="30" height="30"/> 
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="createTime" label="创建时间" width="160"></el-table-column>
+                        <el-table-column fixed type="selection" width="40"></el-table-column>
+                        <el-table-column prop="groupCode" label="房组编号"></el-table-column>
+                        <el-table-column prop="groupName" label="房组名称"></el-table-column>
+                        <el-table-column prop="groupAddress" label="房组地址"></el-table-column>
+                        <el-table-column prop="status" label="状态"></el-table-column>
+                        <el-table-column prop="orderNum" label="排序号"></el-table-column>
+                        <el-table-column prop="remark" label="备注"></el-table-column>
+                        <el-table-column prop="createTime" label="创建时间"></el-table-column>
+                        <el-table-column prop="updateTime" label="更新时间"></el-table-column>
                         <el-table-column fixed="right" label="操作" width="160">
 				            <template slot-scope="scope">
 				              <el-button @click="update(scope.row)" type="warning" size="mini">编辑</el-button>
@@ -91,35 +123,31 @@
                 :visible.sync="dialogVisible"
                 :close-on-click-modal="false"
                 :before-close="handleClose">
-                <g-goods :checkrow="checkRow" @closechild="closechild"></g-goods>
+                <rent-group :checkrow="checkRow" @closechild="closechild"></rent-group>
             </el-dialog>
         </div>
     </div>
 </template>
 <script>
-import gGoods from "@/components/page/goods/goods/gGoodsManager"
-import {goodsApi} from "@/service/goods-api";
-import { imgBaseUrl } from "@/config/env";
+import rentGroup from "@/components/page/rent/group/rentGroupManager"
+import {groupApi} from "@/service/rent-api";
 export default {
-	name:'gGoods',
+	name:'rentGroup',
     data(){
         return {
             dialogVisible:false,
             visible:false,
             form:{
-            	cname:'',
-            	ename:'',
-            	cUrl:'',
+            	groupCode:'',
+            	groupName:'',
+            	groupAddress:'',
+            	status:'',
+            	orderNum:'',
+            	remark:'',
             	createTime:'',
             	updateTime:'',
-            	pid:'',
-            	tPrice:'',
-            	dPrice:'',
-            	sellCount:'',
-            	ticket:'',
-            	descr:'',
-            	imgUrl:'',
             },
+            statusArr:[{label:'启用',value:'1'},{label:'禁用',value:'0'}],
             page:{
             	pageSize:5,
             	currPage:1,
@@ -132,23 +160,12 @@ export default {
         }
     },
     components:{
-        'g-goods' : gGoods
+        'rent-group' : rentGroup
     },
     mounted(){
         this.queryList();
     },
     methods:{
-        getPic(scope){
-            let imgDir = scope.row.imgDir;
-            let imgUrl = scope.row.imgUrl;
-            let url = '';
-            if(imgUrl!=null && imgUrl.length>0){
-                let picarr = imgUrl.split(',');
-                let pic1 = picarr[0];
-                return url = imgBaseUrl+imgDir+pic1;
-            }
-
-        },
     	//改变每页条数
         handleSizeChange(val) {
             this.page.pageSize = val;
@@ -179,7 +196,7 @@ export default {
 	        param.page = this.page.currPage;
 	        
 	        let loading = this.$loading({lock:true,text:'处理中....',background:'rgba(0,0,0,0.5)',target: document.querySelector('.list-panel')});
-	        goodsApi.list(param).then((res)=>{
+	        groupApi.list(param).then((res)=>{
                 if(res.code == "0"){
                   this.tableData = res.data.list;
                   this.page.pageSize = res.data.pageSize;
@@ -205,8 +222,8 @@ export default {
 	      this.dialogTitle = "修改";
 	    },
 	    //查看详情
-	    detail(row){
-	      this.checkRow.selArr = row;
+	    detail(rowData){
+	      this.checkRow.selArr = rowData;
 	      this.checkRow.type='detail';
 	      this.dialogVisible = true;
 	      this.dialogTitle = "查看详情";
@@ -219,13 +236,13 @@ export default {
 	          this.$message({ showClose: true, type: 'warning',  message: '请选择删除的行！', duration:2000 });
 	      }
 	      let idArr = ll.map((e,i)=>{
-	        return e.id;
+	        return e.ID;
 	      });
 	      let param = {
 	        ids:idArr.join(",")
 	      }
 	
-	      goodsApi.deleteByIds(param).then((res)=>{
+	      groupApi.deleteByIds(param).then((res)=>{
                 if(res.code == "0"){
                   this.$message({
                     showClose: true,

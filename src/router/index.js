@@ -71,7 +71,20 @@ let router = new Router({
         //代码生成器
         {path: '/toolGenCodeList', component: resolve => require(['../components/page/tool/gen/toolGenCodeList.vue'], resolve), meta: { title: '代码生成器' }},
         {path: '/toolGenCodeManager', component: resolve => require(['../components/page/tool/gen/toolGenCodeManager.vue'], resolve), meta: { title: '代码生成器' }},
-      
+        //租房管理-房组
+        {path: '/rentGroupList', component: resolve => require(['../components/page/rent/group/rentGroupList.vue'], resolve), meta: { title: '房组列表' }},
+        {path: '/rentGroupManager', component: resolve => require(['../components/page/rent/group/rentGroupManager.vue'], resolve), meta: { title: '房组管理' }},
+        	//租客管理
+        {path: '/rentPersonList', component: resolve => require(['../components/page/rent/person/rentPersonList.vue'], resolve), meta: { title: '租客列表' }},
+        {path: '/rentPersonManager', component: resolve => require(['../components/page/rent/person/rentPersonManager.vue'], resolve), meta: { title: '租客管理' }},
+        	//房屋管理
+        {path: '/rentHouseList', component: resolve => require(['../components/page/rent/house/rentHouseList.vue'], resolve), meta: { title: '房屋列表' }},
+        {path: '/rentHouseManager', component: resolve => require(['../components/page/rent/house/rentHouseManager.vue'], resolve), meta: { title: '房屋管理' }},
+        	//合同管理
+        {path: '/rentContractList', component: resolve => require(['../components/page/rent/contract/rentContractList.vue'], resolve), meta: { title: '合同列表' }},
+        {path: '/rentContractManager', component: resolve => require(['../components/page/rent/contract/rentContractManager.vue'], resolve), meta: { title: '合同管理' }},
+        {path: '/rentBillList', component: resolve => require(['../components/page/rent/bill/rentBillList.vue'], resolve), meta: { title: '账单列表' }},
+        {path: '/rentBillManager', component: resolve => require(['../components/page/rent/bill/rentBillManager.vue'], resolve), meta: { title: '账单管理' }},
       ]
     },
     {

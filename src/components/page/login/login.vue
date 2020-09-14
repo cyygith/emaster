@@ -103,7 +103,7 @@ body{
     margin: auto;
     width: 10rem;
     height: 20rem;
-    background-image: linear-gradient(to right , rgb(12, 14, 13), rgb(96, 109, 223));
+    //background-image: linear-gradient(to right , rgb(12, 14, 13), rgb(96, 109, 223));
     .l-title{
         padding: 1rem;
         text-align: center;
@@ -115,7 +115,8 @@ body{
         left: 30%;
         padding: 1rem 2.5rem 1rem 1rem;
         width: 25rem;
-        background-color: rgba(206, 211, 206,0.2);
+        //background-color: rgba(206, 211, 206,0.2);
+        background-color: rgba(197, 209, 197, 0.5);
         color:white;
     }
     .l-button{

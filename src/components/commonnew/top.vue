@@ -89,7 +89,6 @@
             },
             // 侧边栏折叠
             collapseChage(){
-                console.log("her...collapseChange...");
                 this.collapse = !this.collapse;
                 bus.$emit('collapse', this.collapse);
             },

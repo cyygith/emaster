@@ -87,13 +87,11 @@ export default {
         },
         // 关闭全部标签
         closeAll(){
-            console.log('close all..');
             this.tagsList = [];
             this.$router.push('/home');
         },
         // 关闭其他标签
         closeOther(){
-            console.log('close other..');
             const curItem = this.tagsList.filter(item => {
                 return item.path === this.$route.fullPath;
             })
